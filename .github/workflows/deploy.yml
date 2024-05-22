@@ -32,23 +32,23 @@ jobs:
     - name: Flex bicep
       run: |
         az deployment group create \
-          --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }} \
+          --resource-group ${{ env.group0216 }} \
           --template-file '.github/workflows/flex/main.bicep' \
-          --parameters location=${{ env.AZURE_RESOURCE_GROUP_LOCATION }} \
-            appName=${{ env.UNIQUE_APP_NAME }} \
+          --parameters location=${{ env.North Europe }} \
+            appName=${{ env.app }} \
           --debug
 
     - name: Webapp deploy
       run: |
-        az webapp deploy --name ${{ env.UNIQUE_APP_NAME }} \
-          --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME  }} \
+        az webapp deploy --name ${{ env.app }} \
+          --resource-group ${{ env.group0216  }} \
           --clean true --restart true \
           --type zip --src-path silo.zip --debug
 
     - name: Staging deploy
       run: |
-        az webapp deploy --name ${{ env.UNIQUE_APP_NAME }} \
-          --slot ${{ env.UNIQUE_APP_NAME }}stg \
-          --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME  }} \
+        az webapp deploy --name ${{ env.app }} \
+          --slot ${{ env.app }}stg \
+          --resource-group ${{ env.group0216  }} \
           --clean true --restart true \
           --type zip --src-path silo.zip --debug
